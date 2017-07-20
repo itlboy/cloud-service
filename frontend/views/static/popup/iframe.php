@@ -14,6 +14,11 @@
     </head>
     <body>
         <style>
+            * {
+                border: none;
+                margin: 0px;
+                padding: 0px;
+            }
             .center {
                 text-align: center;
             }

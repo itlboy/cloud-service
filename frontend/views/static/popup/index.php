@@ -32,10 +32,12 @@
             this.content.addClass("bounceInDown");
             this.content.show();
         },
-        resetCss: function () {
-            this.content.css("border", "none");
-            this.content.css("padding", 0);
-            this.content.css("margin", 0);
+        resetCss: function (jqueryObject) {
+            jqueryObject.css({
+                "border": "none",
+                "padding": 0,
+                "margin": 0
+            });
         },
         initContent: function () {
             this.initWraper();
@@ -60,6 +62,7 @@
             this.setIframeCss();
         },
         setIframeCss: function () {
+            this.resetCss(this.content);
             this.content.css({
                 display: "table-cell",
                 'vertical-align': "middle",
@@ -75,6 +78,7 @@
             this.setWraperCss();
         },
         setWraperCss: function () {
+            this.resetCss(this.wraper);
             this.wraper.css({
                 position: "fixed",
                 top: 0,
