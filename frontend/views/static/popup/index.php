@@ -1,22 +1,26 @@
 <script>
     var s$LoadedEvent = new Event('s$Loaded');
     /**************************** Load jquery *****************************/
-    (function () {
-// Load the script
+    loadLibrary('<?php echo $jqueryUrl ?>', function () {
+    });
+//    loadLibrary("//cdn.jsdelivr.net/velocity/1.5/velocity.ui.min.js");
+    loadLibrary("//cdn.jsdelivr.net/velocity/1.5/velocity.min.js", function () {
+        window.s$ = jQuery.noConflict(true);
+        window.dispatchEvent(s$LoadedEvent);
+    });
+    function loadLibrary(scriptSrc, onload) {
         var script = document.createElement("SCRIPT");
-        script.src = '<?php echo $jqueryUrl ?>';
+        script.src = scriptSrc;
         script.type = 'text/javascript';
-        script.onload = function () {
-            window.s$ = jQuery.noConflict(true);
-            window.dispatchEvent(s$LoadedEvent);
-        };
+        script.onload = onload;
         document.getElementsByTagName("head")[0].appendChild(script);
-    })();
+    }
     /**************************** Main Object ****************************/
     var SMTool = function (options) {
         this.options = options;
         this.renderOptions = {};
         this.contentBox;
+        this.contentVisible = false;
     }
 
     SMTool.prototype = {
@@ -28,9 +32,59 @@
             this.initContent();
         },
         iframeLoaded: function () {
-            this.content.addClass("animated");
-            this.content.addClass("bounceInDown");
+            this.listenEvent();
+            this.showContent();
+        },
+        listenEvent: function () {
+            var _this = this;
+            this.wraper.click(function () {
+                if (_this.contentVisible) {
+                    _this.hideContent();
+                }
+            })
+        },
+        showContent: function () {
             this.content.show();
+            var top = (window.innerHeight - this.renderOptions.height) / 2;
+            var _this = this;
+            this.content.velocity({
+                top: top + "px",
+            }, {
+                duration: 500,
+                easing: "easeOutBack",
+                queue: "",
+                begin: function () {
+                    _this.wraper.css({
+                        "background-color": "rgba(0, 0, 0, 0.3)",
+                        "z-index": 9999999999
+                    })
+                },
+                progress: undefined,
+                complete: function () {
+                    _this.contentVisible = true;
+                },
+                display: undefined,
+                visibility: undefined,
+                loop: false,
+                delay: false,
+                mobileHA: true
+            });
+        },
+        hideContent: function () {
+            var _this = this;
+            this.content.velocity({
+                top: this.contentFirstTop}, {
+                duration: 500,
+                easing: "easeInOutBack",
+                queue: "",
+                complete: function () {
+                    _this.content.hide();
+                    _this.wraper.css({
+                        "background-color": "rgba(0, 0, 0, 0)",
+                        "z-index": -1
+                    })
+                }
+            })
         },
         resetCss: function (jqueryObject) {
             jqueryObject.css({
@@ -46,6 +100,7 @@
         initIframe: function () {
             var iframe = document.createElement('iframe');
             this.content = s$(iframe);
+            this.setIframeCss();
             iframe.id = "smtool-content";
             this.wraper[0].appendChild(iframe);
             iframe.width = this.renderOptions.width;
@@ -59,15 +114,16 @@
                 _this.iframeLoaded();
             })
             iframe.contentWindow.document.close();
-            this.setIframeCss();
         },
         setIframeCss: function () {
             this.resetCss(this.content);
+            this.contentFirstTop = -1 * this.renderOptions.height;
             this.content.css({
-                display: "table-cell",
-                'vertical-align': "middle",
+                display: "block",
+                position: "relative",
                 "margin-left": "auto",
-                "margin-right": "auto"
+                "margin-right": "auto",
+                top: this.contentFirstTop,
             });
         },
         initWraper: function () {
@@ -85,6 +141,7 @@
                 left: 0,
                 width: "100%",
                 height: "100%",
+                "z-index": -1
             })
         }
     }
