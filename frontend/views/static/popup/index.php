@@ -42,6 +42,9 @@
                     _this.hideContent();
                 }
             })
+            s$(window).resize(function () {
+                _this.updateContentBox()
+            })
         },
         showContent: function () {
             this.content.show();
@@ -96,6 +99,33 @@
         initContent: function () {
             this.initWraper();
             this.initIframe();
+        },
+        computeContentBox: function () {
+            var renderWidth = this.renderOptions.width;
+            var renderHeight = this.renderOptions.height;
+            var width = Math.min(renderWidth, window.innerWidth);
+            var height = Math.min(renderHeight, window.innerHeight);
+            var ratio = (renderWidth * height) / (renderHeight * width);
+
+            var top = (window.innerHeight - height) / 2 * 0.7;
+
+            if (ratio !== 1) {
+                height = Math.min(1, 1 / ratio) * height;
+                width = Math.min(1, ratio) * width;
+            }
+            return  {
+                width: width,
+                height: height,
+                top: top
+            }
+        },
+        updateContentBox: function () {
+            var computeBox = this.computeContentBox();
+            this.content[0].width = computeBox.width;
+            this.content[0].height = computeBox.height;
+            this.content.css({
+                top: computeBox.top
+            })
         },
         initIframe: function () {
             var iframe = document.createElement('iframe');
