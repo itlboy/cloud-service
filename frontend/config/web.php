@@ -40,8 +40,8 @@ $config = [
                 ],
                 'google' => [
                     'class' => 'yii\authclient\clients\Google',
-                    'clientId' => 'google_client_id',
-                    'clientSecret' => 'google_client_secret',
+                    'clientId' => env('GOOGLE_CLIENT_ID'),
+                    'clientSecret' => env('GOOGLE_CLIENT_SECRET'),
                 ],
             ]
         ],

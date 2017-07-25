@@ -33,20 +33,23 @@
         </style>
         <div class="overflow-bg">
         </div>
-        <div class="title">
-            <h1 class="center">Hello world!</h1>
-        </div>
-        <div class="content">
-            <h3 class="center">Chao mung ban den voi beautiful popup</h3>
+        <!--        <div class="title">
+                    <h1 class="center">Hello world!</h1>
+                </div>-->
+        <div class="content center">
+
         </div>
         <script>
-            var width = smtool.renderOptions.width;
-            var height = smtool.renderOptions.height;
-            $(".title").css("margin-top", height / 4)
-
-            $.each(smtool.renderOptions.css, function (selector, values) {
-                $(selector).css(values);
-            })
+            function run() {
+                var width = smtool.renderOptions.width;
+                var height = smtool.renderOptions.height;
+                $(".title").css("margin-top", height / 4);
+                $(".content").html(smtool.renderOptions.content);
+                $.each(smtool.renderOptions.css, function (selector, values) {
+                    $(selector).css(values);
+                })
+            }
+            run();
         </script>
     </body>
 </html>

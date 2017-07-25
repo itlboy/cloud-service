@@ -16,19 +16,19 @@
             {
                 "options": ["*"],
                 "execute": "INSTALL_SCOPE.setOptions(INSTALL_OPTIONS)",
-                "reload": false
+                "reload": true
             }
         ]
     },
     "options": {
         "properties": {
-            "color": {
-                "default": "#f38020",
-                "format": "color",
-                "title": "Color Example",
-                "type": "string"
+            "content": {
+                "title": "Content",
+                "type": "string",
+                "format": "richtext",
+                "default": "<h1>Write with style!</h1> <h3>Popup box content</h3>"
             },
-            "backgroundImage": {
+            "backgroundImage": { 
                 "title": "background image",
                 "type": "string",
                 "format": "image"

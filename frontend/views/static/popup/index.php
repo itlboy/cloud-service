@@ -1,5 +1,15 @@
 <script>
-    var s$LoadedEvent = new Event('s$Loaded');
+    function SMcreateNewEvent(eventName) {
+        if (typeof (Event) === 'function') {
+            var event = new Event(eventName);
+        } else {
+            var event = document.createEvent('Event');
+            event.initEvent(eventName, true, true);
+        }
+        return event;
+    }
+
+    var s$LoadedEvent = SMcreateNewEvent('s$Loaded');
     /**************************** Load jquery *****************************/
     loadLibrary('<?php echo $jqueryUrl ?>', function () {
     });
@@ -28,7 +38,7 @@
             this.options = options;
         },
         render: function (options) {
-            this.renderOptions = options;
+            this.renderOptions = this.convertFromCloudflareOptions(options);
             this.initContent();
         },
         iframeLoaded: function () {
@@ -101,15 +111,29 @@
             this.initWraper();
             this.initIframe();
         },
+        convertFromCloudflareOptions: function (cfOptions) {
+            return {
+                width: 600,
+                height: 400,
+                content: cfOptions.content,
+                css: {
+                    body: {
+                        "background-image": "url(" + cfOptions.backgroundImage + ")",
+                        color: "white",
+                    },
+                    '.title': {
+                        color: "white"
+                    }
+                }
+            };
+        },
         computeContentBox: function () {
             var renderWidth = this.renderOptions.width;
             var renderHeight = this.renderOptions.height;
             var width = Math.min(renderWidth, window.innerWidth);
             var height = Math.min(renderHeight, window.innerHeight);
             var ratio = (renderWidth * height) / (renderHeight * width);
-
             var top = (window.innerHeight - height) / 2 * 0.7;
-
             if (ratio !== 1) {
                 height = Math.min(1, 1 / ratio) * height;
                 width = Math.min(1, ratio) * width;
@@ -122,7 +146,7 @@
         },
         updateContentBox: function () {
             var computeBox = this.computeContentBox();
-            console.log(computeBox);
+//            console.log(computeBox);
             this.content[0].width = computeBox.width;
             this.content[0].height = computeBox.height;
             this.content.css({
@@ -157,7 +181,11 @@
                 "margin-left": "auto",
                 "margin-right": "auto",
                 top: this.contentFirstTop,
+                overflow: "hidden"
             });
+        },
+        updateOptions: function (options) {
+            this.renderOptions = options;
         },
         initWraper: function () {
             var div = document.createElement('div');
@@ -178,21 +206,10 @@
             })
         }
     }
-    var smtool = new SMTool({});
+
     window.addEventListener("s$Loaded", function (e) {
-    
-        smtool.render({
-            width: 600,
-            height: 400,
-            css: {
-                body: {
-                    "background-image": "url(http://www.technocrazed.com/wp-content/uploads/2015/12/beautiful-wallpaper-download-14.jpg)",
-                    color: "white",
-                },
-                '.title': {
-                    color: "white"
-                }
-            }
-        });
+        window.smtool = new SMTool({});
+        var event = SMcreateNewEvent("SMToolLoaded")
+        window.dispatchEvent(event);
     }, false)
 </script>
