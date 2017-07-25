@@ -27,12 +27,14 @@
     "options": {
         "properties": {
             "content": {
+                "order": 1,
                 "title": "Content",
                 "type": "string",
                 "format": "richtext",
                 "default": "<h1>Default popup title</h1><h3><br></h3><h3>Something about your popup</h3><p><br></p><p><a href=\"http://example.com\" target=\"_blank\">Link to your website</a></p>"
             },
             "backgroundImage": {
+                "order": 2,
                 "title": "Background image (leave blank to use random image)",
                 "type": "string",
                 "format": "image"
@@ -42,11 +44,13 @@
                 "title": "Size",
                 "properties": {
                     "width": {
+                        "order": 3,
                         "default": 600,
                         "title": "Width",
                         "type": "number"
                     },
                     "height": {
+                        "order": 4,
                         "default": 400,
                         "title": "Height",
                         "type": "number"
@@ -56,8 +60,10 @@
             "displayRules": {
                 "type": "object",
                 "title": "Display rules",
+                "order":5,
                 "properties": {
                     "displayFrequency": {
+                        "order": 6,
                         "default": "0",
                         "title": "Display frequency",
                         "type": "string",
@@ -77,6 +83,7 @@
                         }
                     },
                     "donotShowPages": {
+                        "order": 7,
                         "title": "Do not show on pages",
                         "type": "array",
                         "items": {
@@ -106,6 +113,7 @@
                 }
             },
             "showAdvanced": {
+                "order": 99,
                 "type": "boolean",
                 "title": "Show advanced options",
                 "default": false
@@ -118,6 +126,7 @@
                 "title": "Advanced options",
                 "properties": {
                     "customCss": {
+                        "order": 100,
                         "type": "string",
                         "title": "Custom css",
                         "format": "code"
