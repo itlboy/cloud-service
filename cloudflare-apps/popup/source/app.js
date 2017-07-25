@@ -19,15 +19,21 @@
     // updateElement runs every time the options are updated.
     // Most of your code will end up inside this function.
 
-    function run() {
-        if (!cloudSerivceLoaded) { 
-            return; 
+    function run(updateContent) {
+        if (!cloudSerivceLoaded) {
+            return;
         }
-        smtool.render(options);
+        if (updateContent)
+        {
+            smtool.updateOptions(options)
+
+        } else {
+            smtool.render(options);
+        }
     }
 
     function firstRun() {
-        cloudSerivceLoaded = true;  
+        cloudSerivceLoaded = true;
         run();
     }
     window.addEventListener("SMToolLoaded", function (e) {
@@ -40,9 +46,9 @@
 
     // INSTALL_SCOPE is an object that is used to handle option changes without refreshing the page.
     window.INSTALL_SCOPE = {
-        setOptions: function setOptions(nextOptions) {
+        setOptions: function (nextOptions) {
             options = nextOptions
-//            run();
+            run(true);
         }
     }
 }())

@@ -8,10 +8,10 @@ use MatthiasMullie\Minify;
 class StaticController extends Controller {
 
     public $layout = false;
-    public $minifyJs = true; 
+    public $minifyJs = true;
     public $enableCache = false;
-    public $indexJqueryUrl = "https://ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.min.js";
-    public $iframeJqueryUrl = "https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js";
+    public $indexJqueryUrl = "https://cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js";
+    public $iframeJqueryUrl = "https://cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js";
 
     public function actionIndex() {
         return $this->render('index');
@@ -36,9 +36,15 @@ class StaticController extends Controller {
         return $content;
     }
 
+    public function getRandomImages() {
+        $images = scandir("img/popup");
+        return array_slice($images, 2);
+    }
+
     public function actionPopup() {
         $iframeContent = json_encode($this->render("popup/iframe", [
-                    'jqueryUrl' => $this->iframeJqueryUrl
+                    'jqueryUrl' => $this->iframeJqueryUrl,
+                    'randomImages' => json_encode($this->getRandomImages()),
         ]));
         $content = $this->printJavascript("popup/index.php", [
             'iframeContent' => $iframeContent,

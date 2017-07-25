@@ -12,12 +12,13 @@
     var s$LoadedEvent = SMcreateNewEvent('s$Loaded');
     /**************************** Load jquery *****************************/
     loadLibrary('<?php echo $jqueryUrl ?>', function () {
+        loadLibrary("//cdn.jsdelivr.net/velocity/1.5/velocity.min.js", function () {
+            window.s$ = jQuery.noConflict(true);
+            window.dispatchEvent(s$LoadedEvent);
+        });
     });
 //    loadLibrary("//cdn.jsdelivr.net/velocity/1.5/velocity.ui.min.js");
-    loadLibrary("//cdn.jsdelivr.net/velocity/1.5/velocity.min.js", function () {
-        window.s$ = jQuery.noConflict(true);
-        window.dispatchEvent(s$LoadedEvent);
-    });
+
     function loadLibrary(scriptSrc, onload) {
         var script = document.createElement("SCRIPT");
         script.src = scriptSrc;
@@ -31,6 +32,7 @@
         this.renderOptions = {};
         this.contentBox;
         this.contentVisible = false;
+        this.updateOptionsEvent = SMcreateNewEvent("SMToolUpdateOptions");
     }
 
     SMTool.prototype = {
@@ -38,7 +40,7 @@
             this.options = options;
         },
         render: function (options) {
-            this.renderOptions = this.convertFromCloudflareOptions(options);
+            this.renderOptions = options;  //this.convertFromCloudflareOptions(options);
             this.initContent();
         },
         iframeLoaded: function () {
@@ -69,7 +71,7 @@
                 queue: "",
                 begin: function () {
                     _this.wraper.css({
-                        "background-color": "rgba(0, 0, 0, 0.3)",
+                        "background-color": "rgba(0, 0, 0, 0.8)",
                         "z-index": 9999999999
                     })
                 },
@@ -186,6 +188,7 @@
         },
         updateOptions: function (options) {
             this.renderOptions = options;
+            window.dispatchEvent(this.updateOptionsEvent);
         },
         initWraper: function () {
             var div = document.createElement('div');

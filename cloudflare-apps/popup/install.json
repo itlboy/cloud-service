@@ -16,6 +16,10 @@
             {
                 "options": ["*"],
                 "execute": "INSTALL_SCOPE.setOptions(INSTALL_OPTIONS)",
+                "reload": false
+            },
+            {
+                "options": ["width","height"],
                 "reload": true
             }
         ]
@@ -26,12 +30,22 @@
                 "title": "Content",
                 "type": "string",
                 "format": "richtext",
-                "default": "<h1>Write with style!</h1> <h3>Popup box content</h3>"
+                "default": "<h1>Default popup title</h1><h3><br></h3><h3>Something about your popup</h3><p><br></p><p><a href=\"http://example.com\" target=\"_blank\">Link to your website</a></p>"
             },
-            "backgroundImage": { 
-                "title": "background image",
+            "backgroundImage": {
+                "title": "Background image (leave blank to use random image)",
                 "type": "string",
                 "format": "image"
+            },
+            "width": {
+                "default": 600,
+                "title": "Width",
+                "type": "number"
+            },
+            "height": {
+                "default": 400,
+                "title": "Height",
+                "type": "number"
             }
         }
     }
