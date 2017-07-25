@@ -23,6 +23,9 @@
         if (!cloudSerivceLoaded) {
             return;
         }
+        if (INSTALL_ID == 'preview') {
+            smtool.preview = true;
+        }
         if (updateContent)
         {
             smtool.updateOptions(options)

@@ -19,7 +19,7 @@
                 "reload": false
             },
             {
-                "options": ["width","height"],
+                "options": ["width", "height"],
                 "reload": true
             }
         ]
@@ -37,15 +37,92 @@
                 "type": "string",
                 "format": "image"
             },
-            "width": {
-                "default": 600,
-                "title": "Width",
-                "type": "number"
+            "size": {
+                "type": "object",
+                "title": "Size",
+                "properties": {
+                    "width": {
+                        "default": 600,
+                        "title": "Width",
+                        "type": "number"
+                    },
+                    "height": {
+                        "default": 400,
+                        "title": "Height",
+                        "type": "number"
+                    }
+                }
             },
-            "height": {
-                "default": 400,
-                "title": "Height",
-                "type": "number"
+            "displayRules": {
+                "type": "object",
+                "title": "Display rules",
+                "properties": {
+                    "displayFrequency": {
+                        "default": "0",
+                        "title": "Display frequency",
+                        "type": "string",
+                        "enum": [
+                            "0",
+                            "3600",
+                            "86400",
+                            "604800",
+                            "2592000"
+                        ],
+                        "enumNames": {
+                            "0": "Every time",
+                            "3600": "Every hour",
+                            "86400": "Every day",
+                            "604800": "Every week",
+                            "2592000": "Every month"
+                        }
+                    },
+                    "donotShowPages": {
+                        "title": "Do not show on pages",
+                        "type": "array",
+                        "items": {
+                            "title": "Rule",
+                            "type": "object",
+                            "properties": {
+                                "type": {
+                                    "type": "string",
+                                    "title": "Type",
+                                    "default": "urlHasString",
+                                    "enum": [
+                                        "urlHasString",
+                                        "urlMatch"
+                                    ],
+                                    "enumNames": {
+                                        "urlHasString": "Url has string",
+                                        "urlMatch": "Url matching Ex. example.com/*"
+                                    }
+                                },
+                                "value": {
+                                    "title": "Value",
+                                    "type": "string"
+                                }
+                            }
+                        }
+                    }
+                }
+            },
+            "showAdvanced": {
+                "type": "boolean",
+                "title": "Show advanced options",
+                "default": false
+            },
+            "advanced": {
+                "showIf": {
+                    "showAdvanced": true
+                },
+                "type": "object",
+                "title": "Advanced options",
+                "properties": {
+                    "customCss": {
+                        "type": "string",
+                        "title": "Custom css",
+                        "format": "code"
+                    }
+                }
             }
         }
     }

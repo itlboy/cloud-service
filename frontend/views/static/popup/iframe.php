@@ -2,6 +2,7 @@
     <head>
         <script>
             var smtool = parent.smtool;
+            console.log("options", smtool.renderOptions);
         </script>
         <script src="<?php echo $jqueryUrl ?>">
         </script>
@@ -107,7 +108,7 @@
                 run();
             })
             $(".close-button").click(function () {
-                smtool.hideContent();
+                smtool.userClose();
             })
         </script>
     </body>

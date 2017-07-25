@@ -36,7 +36,7 @@ echo \common\widgets\DbText::widget([
 
 </div>
 <?php $this->endContent() ?>
-<!--<script>
+<script>
     (function () {
         var script = document.createElement("SCRIPT");
         var d = new Date();
@@ -45,4 +45,4 @@ echo \common\widgets\DbText::widget([
         script.type = 'text/javascript';
         document.getElementsByTagName("head")[0].appendChild(script);
     })();
-</script>-->
+</script>
