@@ -98,6 +98,24 @@
             }
             return false;
         },
+        urlMatchValidate: function (value) {
+            var currentUrl = this.formatUrl(window.location.href);
+            value = this.formatUrl(value);
+            var regex = this.convertToRegex(value);
+            return regex.test(currentUrl);
+        },
+        formatUrl: function (url) {
+            if (decodeURIComponent(url) == url) {
+                url = encodeURI(url);
+            }
+            return url.replace(/(^\w+:|^)\/\/|\/$/, '');
+        },
+        convertToRegex: function (str) {
+            str = str.replace(/[\-\/\[\]\{\}\(\)\+\.\\\^\$\|]/g, "\\$&")
+                    .replace(/\*/g, '.*')
+                    .replace(/\?/g, '\\?');
+            return  new RegExp(str, "i");
+        },
         enableToOpen: function () {
             if (this.preview) {
                 return true;
@@ -120,7 +138,22 @@
             if (this.enableToOpen())
             {
                 this.initContent();
+                this.createCustomStyle();
             }
+        },
+        createCustomStyle: function () {
+            if (this.renderOptions.hasOwnProperty("advanced"))
+            {
+                var style = this.renderOptions.advanced.customCss;
+            } else {
+                return;
+            }
+            if (!this.customStyleObject) {
+                var id = this.preName + "custom-style";
+                s$("body").append("<style id=\"" + id + "\"> </style>");
+                this.customStyleObject = s$("#" + id);
+            }
+            this.customStyleObject.html(style);
         },
         iframeLoaded: function () {
             this.listenEvent();
@@ -237,16 +270,16 @@
         },
         updateContentBox: function () {
             var computeBox = this.computeContentBox();
-<<<<<<< HEAD
-            console.log(computeBox);
-=======
-//            console.log(computeBox);
->>>>>>> 3fe69867c8720299a98b249dc7158ef25ec3a755
             this.content[0].width = computeBox.width;
             this.content[0].height = computeBox.height;
             this.content.css({
                 top: computeBox.top
             })
+        },
+        updateIframe: function () {
+            var compute = this.computeContentBox();
+            this.content[0].width = compute.width;
+            this.content[0].height = compute.height;
         },
         initIframe: function () {
             var iframe = document.createElement('iframe');
@@ -254,9 +287,7 @@
             this.setIframeCss();
             iframe.id = "smtool-content";
             this.wraper[0].appendChild(iframe);
-            var compute = this.computeContentBox();
-            iframe.width = compute.width;
-            iframe.height = compute.height;
+            this.updateIframe();
             var _this = this;
             var html = <?php echo $iframeContent ?>;
             this.content.hide();
@@ -281,6 +312,8 @@
         },
         updateOptions: function (options) {
             this.renderOptions = options;
+            this.updateIframe();
+            this.createCustomStyle();
             window.dispatchEvent(this.updateOptionsEvent);
         },
         initWraper: function () {
@@ -304,26 +337,9 @@
     }
 
     window.addEventListener("s$Loaded", function (e) {
-<<<<<<< HEAD
-    
-        smtool.render({
-            width: 600,
-            height: 400,
-            css: {
-                body: {
-                    "background-image": "url(http://www.technocrazed.com/wp-content/uploads/2015/12/beautiful-wallpaper-download-14.jpg)",
-                    color: "white",
-                },
-                '.title': {
-                    color: "white"
-                }
-            }
-        });
-=======
         window.smtool = new SMTool({});
         var event = SMcreateNewEvent("SMToolLoaded")
         window.dispatchEvent(event);
->>>>>>> 3fe69867c8720299a98b249dc7158ef25ec3a755
     }, false)
 
 </script>

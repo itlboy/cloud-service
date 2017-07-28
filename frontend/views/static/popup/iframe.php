@@ -13,7 +13,7 @@
                  Latest compiled and minified JavaScript 
                 <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js" integrity="sha384-Tc5IQib027qvyjSMfHjOMaLkfuWVxZxUPnCJA7l2mCWNIpG9mGCD8wGNIcPD7Txa" crossorigin="anonymous"></script>-->
     </head>
-    <body>
+    <body id="SMTOOL_popup">
         <style>
             * {
                 border: none;
@@ -81,6 +81,9 @@
                 </div>-->
         <div class="content center">
         </div>
+        <style id="custom-style">
+
+        </style>
 
         <script>
             function run() {
@@ -102,6 +105,12 @@
                 $.each(smtool.renderOptions.css, function (selector, values) {
                     $(selector).css(values);
                 })
+                //custom style
+                if (smtool.renderOptions.hasOwnProperty("advanced"))
+                {
+                    var style = smtool.renderOptions.advanced.customCss;
+                    $("#custom-style").html(style);
+                }
             }
             run();
             parent.addEventListener("SMToolUpdateOptions", function () {
