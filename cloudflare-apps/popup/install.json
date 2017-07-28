@@ -1,10 +1,6 @@
 {
     "resources": {
-        "body": [
-            {
-                "type": "style",
-                "src": "./source/app.css"
-            },
+        "head": [
             {
                 "type": "script",
                 "src": "./source/app.js"
@@ -20,7 +16,7 @@
             },
             {
                 "options": ["width", "height"],
-                "reload": true
+                "reload": false
             }
         ]
     },
@@ -42,15 +38,16 @@
             "size": {
                 "type": "object",
                 "title": "Size",
+                "order":3,
                 "properties": {
                     "width": {
-                        "order": 3,
+                        "order": 1,
                         "default": 600,
                         "title": "Width",
                         "type": "number"
                     },
                     "height": {
-                        "order": 4,
+                        "order": 2,
                         "default": 400,
                         "title": "Height",
                         "type": "number"
@@ -60,10 +57,10 @@
             "displayRules": {
                 "type": "object",
                 "title": "Display rules",
-                "order":5,
+                "order":4,
                 "properties": {
                     "displayFrequency": {
-                        "order": 6,
+                        "order": 1,
                         "default": "0",
                         "title": "Display frequency",
                         "type": "string",
@@ -83,7 +80,7 @@
                         }
                     },
                     "donotShowPages": {
-                        "order": 7,
+                        "order": 2,
                         "title": "Do not show on pages",
                         "type": "array",
                         "items": {
@@ -94,6 +91,7 @@
                                     "type": "string",
                                     "title": "Type",
                                     "default": "urlHasString",
+                                    "order":1,
                                     "enum": [
                                         "urlHasString",
                                         "urlMatch"
@@ -105,7 +103,8 @@
                                 },
                                 "value": {
                                     "title": "Value",
-                                    "type": "string"
+                                    "type": "string",
+                                    "order":2
                                 }
                             }
                         }
@@ -113,7 +112,7 @@
                 }
             },
             "showAdvanced": {
-                "order": 99,
+                "order": 5,
                 "type": "boolean",
                 "title": "Show advanced options",
                 "default": false
@@ -124,9 +123,10 @@
                 },
                 "type": "object",
                 "title": "Advanced options",
+                "order":6,
                 "properties": {
                     "customCss": {
-                        "order": 100,
+                        "order": 1,
                         "type": "string",
                         "title": "Custom css",
                         "format": "code"
