@@ -17,21 +17,121 @@
                 "options": ["*"],
                 "execute": "INSTALL_SCOPE.setOptions(INSTALL_OPTIONS)",
                 "reload": false
+            },
+            {
+                "options": ["width", "height"],
+                "reload": true
             }
         ]
     },
     "options": {
         "properties": {
-            "color": {
-                "default": "#f38020",
-                "format": "color",
-                "title": "Color Example",
-                "type": "string"
+            "content": {
+                "order": 1,
+                "title": "Content",
+                "type": "string",
+                "format": "richtext",
+                "default": "<h1>Default popup title</h1><h3><br></h3><h3>Something about your popup</h3><p><br></p><p><a href=\"http://example.com\" target=\"_blank\">Link to your website</a></p>"
             },
             "backgroundImage": {
-                "title": "background image",
+                "order": 2,
+                "title": "Background image (leave blank to use random image)",
                 "type": "string",
                 "format": "image"
+            },
+            "size": {
+                "type": "object",
+                "title": "Size",
+                "properties": {
+                    "width": {
+                        "order": 3,
+                        "default": 600,
+                        "title": "Width",
+                        "type": "number"
+                    },
+                    "height": {
+                        "order": 4,
+                        "default": 400,
+                        "title": "Height",
+                        "type": "number"
+                    }
+                }
+            },
+            "displayRules": {
+                "type": "object",
+                "title": "Display rules",
+                "order":5,
+                "properties": {
+                    "displayFrequency": {
+                        "order": 6,
+                        "default": "0",
+                        "title": "Display frequency",
+                        "type": "string",
+                        "enum": [
+                            "0",
+                            "3600",
+                            "86400",
+                            "604800",
+                            "2592000"
+                        ],
+                        "enumNames": {
+                            "0": "Every time",
+                            "3600": "Every hour",
+                            "86400": "Every day",
+                            "604800": "Every week",
+                            "2592000": "Every month"
+                        }
+                    },
+                    "donotShowPages": {
+                        "order": 7,
+                        "title": "Do not show on pages",
+                        "type": "array",
+                        "items": {
+                            "title": "Rule",
+                            "type": "object",
+                            "properties": {
+                                "type": {
+                                    "type": "string",
+                                    "title": "Type",
+                                    "default": "urlHasString",
+                                    "enum": [
+                                        "urlHasString",
+                                        "urlMatch"
+                                    ],
+                                    "enumNames": {
+                                        "urlHasString": "Url has string",
+                                        "urlMatch": "Url matching Ex. example.com/*"
+                                    }
+                                },
+                                "value": {
+                                    "title": "Value",
+                                    "type": "string"
+                                }
+                            }
+                        }
+                    }
+                }
+            },
+            "showAdvanced": {
+                "order": 99,
+                "type": "boolean",
+                "title": "Show advanced options",
+                "default": false
+            },
+            "advanced": {
+                "showIf": {
+                    "showAdvanced": true
+                },
+                "type": "object",
+                "title": "Advanced options",
+                "properties": {
+                    "customCss": {
+                        "order": 100,
+                        "type": "string",
+                        "title": "Custom css",
+                        "format": "code"
+                    }
+                }
             }
         }
     }
