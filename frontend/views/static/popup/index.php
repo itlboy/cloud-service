@@ -43,12 +43,13 @@
                 }
             })
             s$(window).resize(function () {
-                _this.updateContentBox()
+                if (_this.contentVisible)
+                    _this.updateContentBox()
             })
         },
         showContent: function () {
             this.content.show();
-            var top = (window.innerHeight - this.renderOptions.height) / 2;
+            var top = this.computeContentBox().top;
             var _this = this;
             this.content.velocity({
                 top: top + "px",
@@ -121,6 +122,7 @@
         },
         updateContentBox: function () {
             var computeBox = this.computeContentBox();
+            console.log(computeBox);
             this.content[0].width = computeBox.width;
             this.content[0].height = computeBox.height;
             this.content.css({
@@ -133,8 +135,9 @@
             this.setIframeCss();
             iframe.id = "smtool-content";
             this.wraper[0].appendChild(iframe);
-            iframe.width = this.renderOptions.width;
-            iframe.height = this.renderOptions.height;
+            var compute = this.computeContentBox();
+            iframe.width = compute.width;
+            iframe.height = compute.height;
             var _this = this;
             var html = <?php echo $iframeContent ?>;
             this.content.hide();
@@ -177,6 +180,7 @@
     }
     var smtool = new SMTool({});
     window.addEventListener("s$Loaded", function (e) {
+    
         smtool.render({
             width: 600,
             height: 400,
