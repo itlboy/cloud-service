@@ -209,6 +209,7 @@
             this.afterUserClose();
         },
         hideContent: function () {
+            this.contentVisible = false;
             var _this = this;
             this.content.velocity({
                 top: this.contentFirstTop}, {
@@ -315,6 +316,9 @@
             this.updateIframe();
             this.createCustomStyle();
             window.dispatchEvent(this.updateOptionsEvent);
+            if(this.preview && !this.contentVisible) {
+                this.showContent();
+            }
         },
         initWraper: function () {
             var div = document.createElement('div');

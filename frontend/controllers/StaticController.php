@@ -8,11 +8,7 @@ use MatthiasMullie\Minify;
 class StaticController extends Controller {
 
     public $layout = false;
-<<<<<<< HEAD
     public $minifyJs = true; 
-=======
-    public $minifyJs = true;
->>>>>>> 3fe69867c8720299a98b249dc7158ef25ec3a755
     public $enableCache = false;
     public $indexJqueryUrl = "https://cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js";
     public $iframeJqueryUrl = "https://cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js";
