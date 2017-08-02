@@ -312,6 +312,7 @@
             });
         },
         updateOptions: function (options) {
+            console.log(options); 
             this.renderOptions = options;
             this.updateIframe();
             this.createCustomStyle();
