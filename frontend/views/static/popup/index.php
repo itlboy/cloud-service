@@ -255,8 +255,8 @@
         computeContentBox: function () {
             var renderWidth = this.renderOptions.size.width;
             var renderHeight = this.renderOptions.size.height;
-            var width = Math.min(renderWidth, window.innerWidth);
-            var height = Math.min(renderHeight, window.innerHeight);
+            var width = Math.min(renderWidth, document.body.clientWidth);
+            var height = Math.min(renderHeight, document.body.clientHeight);
             var ratio = (renderWidth * height) / (renderHeight * width);
             var top = (window.innerHeight - height) / 2 * 0.7;
             if (ratio !== 1) {
