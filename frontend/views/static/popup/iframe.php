@@ -92,12 +92,15 @@
                 {
                     backgroundImage = smtool.renderOptions.backgroundImage;
                 } else {
-                    var randomImages = <?php echo $randomImages ?>;
-                    var randomImage = randomImages[Math.floor(Math.random() * randomImages.length)];
-                    backgroundImage = "https://cloud.tech1412.com/img/popup/" + randomImage;
+                    if (!$(".background").attr("src")) {
+                        var randomImages = <?php echo $randomImages ?>;
+                        var randomImage = randomImages[Math.floor(Math.random() * randomImages.length)];
+                        backgroundImage = "https://cloud.tech1412.com/img/popup/" + randomImage;
+                    } else {
+                        backgroundImage = $(".background").attr("src");
+                    }
                 }
-                $(".background").attr("src", $(".background").attr("src") || backgroundImage)
-
+                $(".background").attr("src", backgroundImage)
 //                var width = smtool.renderOptions.width;
 //                var height = smtool.renderOptions.height;
                 $(".content").css("margin-top", "24vh");
