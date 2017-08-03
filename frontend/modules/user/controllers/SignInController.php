@@ -243,6 +243,9 @@ class SignInController extends \yii\web\Controller
             $user->scenario = 'oauth_create';
             $user->username = ArrayHelper::getValue($attributes, 'login');
             $user->email = ArrayHelper::getValue($attributes, 'email');
+            if(!$user->email) {
+                $user->email = ArrayHelper::getValue($attributes, 'emails')[0]['value'];
+            }
             $user->oauth_client = $client->getName();
             $user->oauth_client_user_id = ArrayHelper::getValue($attributes, 'id');
             $user->status = User::STATUS_ACTIVE;
@@ -297,7 +300,8 @@ class SignInController extends \yii\web\Controller
 
             };
         }
-        if (Yii::$app->user->login($user, 3600 * 24 * 30)) {
+        if (Yii::$app->user->login($user)) {
+//        if (Yii::$app->user->login($user, 3600 * 24 * 30)) {
             return true;
         }
 
