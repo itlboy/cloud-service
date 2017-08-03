@@ -258,11 +258,11 @@
             var width = Math.min(renderWidth, document.body.clientWidth);
             var height = Math.min(renderHeight, document.body.clientHeight);
             var ratio = (renderWidth * height) / (renderHeight * width);
-            var top = (window.innerHeight - height) / 2 * 0.7;
             if (ratio !== 1) {
                 height = Math.min(1, 1 / ratio) * height;
                 width = Math.min(1, ratio) * width;
             }
+            var top = (window.innerHeight - height) / 2 * 0.7;
             return  {
                 width: width,
                 height: height,
@@ -312,12 +312,12 @@
             });
         },
         updateOptions: function (options) {
-            console.log(options); 
+            console.log(options);
             this.renderOptions = options;
             this.updateIframe();
             this.createCustomStyle();
             window.dispatchEvent(this.updateOptionsEvent);
-            if(this.preview && !this.contentVisible) {
+            if (this.preview && !this.contentVisible) {
                 this.showContent();
             }
         },
