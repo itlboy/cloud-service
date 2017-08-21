@@ -5,7 +5,7 @@ namespace frontend\controllers;
 use Yii;
 use frontend\models\ContactForm;
 use yii\web\Controller;
-use Docker\Docker;
+//use Docker\Docker;
 
 /**
  * Site controller
@@ -58,11 +58,11 @@ class SiteController extends Controller {
     }
 
     public function actionTest() {
-        $client = new Docker\DockerClient([
-            'remote_socket' => 'tcp://45.63.12.163:2375',
+        $client = new \Docker\DockerClient([
+            'remote_socket' => 'tcp://127.0.0.1:2375',
             'ssl' => false,
         ]);
-        $docker = new Docker($client);
+        $docker = new \Docker\Docker($client);
         $containers = $docker->getContainerManager()->findAll();
         print_r($containers);
     }

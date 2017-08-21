@@ -1,52 +1,59 @@
-data:
-  image: busybox
-  volumes:
-    - ./:/app
-  entrypoint: tail -f /dev/null
+version: "2"
+services: 
+    data:
+      image: busybox
+      volumes:
+        - ./:/app
+      entrypoint: tail -f /dev/null
 
-app:
-  build: docker/php
-  working_dir: /app
-  volumes_from:
-    - data
-  expose:
-    - 9000
-  links:
-    - db
-#    - mailcatcher
-#  environment:
-#    XDEBUG_CONFIG: "idekey=PHPSTORM remote_enable=On remote_connect_back=On"
+    app:
+      build: docker/php
+      working_dir: /app
+      volumes_from:
+        - data
+      expose:
+        - 9000
+      links:
+        - db
+      networks:
+        - dockernet
+    #    - mailcatcher
+    #  environment:
+    #    XDEBUG_CONFIG: "idekey=PHPSTORM remote_enable=On remote_connect_back=On"
 
-nginx:
-  image: nginx:alpine
-  ports:
-    - "80:80"
-  volumes:
-    - ./:/app
-    - ./docker/nginx/vhost.conf:/etc/nginx/conf.d/vhost.conf
-  links:
-    - app
+    nginx:
+      image: nginx:alpine
+      ports:
+        - "80:80"
+      volumes:
+        - ./:/app
+        - ./docker/nginx/vhost.conf:/etc/nginx/conf.d/vhost.conf
+      links:
+        - app
 
-#mailcatcher:
-#    image: schickling/mailcatcher:latest
-#    ports:
-#      - "1080:1080"
+    #mailcatcher:
+    #    image: schickling/mailcatcher:latest
+    #    ports:
+    #      - "1080:1080"
 
-db:
-  image: mariadb
-  volumes:
-    - ./docker/mysql:/var/lib/mysql
-#  ports:
-#    - "3306:3306"
-  environment:
-    MYSQL_ROOT_PASSWORD: gPuaZstaQkzPCWSy
-    MYSQL_DATABASE: cloud
-    MYSQL_USER: cloud
-    MYSQL_PASSWORD: lOqBWMyeULfBwTVQ
-    
-myadmin:
-    image: phpmyadmin/phpmyadmin
-    ports:
-      - "6996:80"
-    links:
-      - db  
+    db:
+      image: mariadb
+      volumes:
+        - ./docker/mysql:/var/lib/mysql
+    #  ports:
+    #    - "3306:3306"
+      environment:
+        MYSQL_ROOT_PASSWORD: gPuaZstaQkzPCWSy
+        MYSQL_DATABASE: cloud
+        MYSQL_USER: cloud
+        MYSQL_PASSWORD: lOqBWMyeULfBwTVQ
+
+    myadmin:
+        image: phpmyadmin/phpmyadmin
+        ports:
+          - "6996:80"
+        links:
+          - db  
+networks:
+    dockernet:
+        external: true
