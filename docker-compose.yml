@@ -1,5 +1,5 @@
 data:
-  image: busybox:latest
+  image: busybox
   volumes:
     - ./:/app
   entrypoint: tail -f /dev/null
@@ -13,12 +13,12 @@ app:
     - 9000
   links:
     - db
-    - mailcatcher
-  environment:
-    XDEBUG_CONFIG: "idekey=PHPSTORM remote_enable=On remote_connect_back=On"
+#    - mailcatcher
+#  environment:
+#    XDEBUG_CONFIG: "idekey=PHPSTORM remote_enable=On remote_connect_back=On"
 
 nginx:
-  image: nginx:1.12-alpine
+  image: nginx:alpine
   ports:
     - "80:80"
   volumes:
@@ -27,19 +27,26 @@ nginx:
   links:
     - app
 
-mailcatcher:
-    image: schickling/mailcatcher:latest
-    ports:
-      - "1080:1080"
+#mailcatcher:
+#    image: schickling/mailcatcher:latest
+#    ports:
+#      - "1080:1080"
 
 db:
-  image: mariadb:10.3
+  image: mariadb
   volumes:
     - ./docker/mysql:/var/lib/mysql
-  ports:
-    - "3306:3306"
+#  ports:
+#    - "3306:3306"
   environment:
     MYSQL_ROOT_PASSWORD: gPuaZstaQkzPCWSy
     MYSQL_DATABASE: cloud
     MYSQL_USER: cloud
     MYSQL_PASSWORD: lOqBWMyeULfBwTVQ
+    
+myadmin:
+    image: phpmyadmin/phpmyadmin
+    ports:
+      - "6996:80"
+    links:
+      - db  

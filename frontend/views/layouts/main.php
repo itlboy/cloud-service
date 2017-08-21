@@ -36,13 +36,3 @@ echo \common\widgets\DbText::widget([
 
 </div>
 <?php $this->endContent() ?>
-<script>
-    (function () {
-        var script = document.createElement("SCRIPT");
-        var d = new Date();
-        var n = d.getTime();
-        script.src = 'https://cloud.tech1412.com/static/popup.js?' + n;
-        script.type = 'text/javascript';
-        document.getElementsByTagName("head")[0].appendChild(script);
-    })();
-</script>
